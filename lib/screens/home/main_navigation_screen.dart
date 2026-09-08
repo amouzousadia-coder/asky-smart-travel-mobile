@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/routes/app_routes.dart';
 import '../../widgets/app_bottom_navigation.dart';
 import '../flights/search_flight_screen.dart';
 import '../profile/profile_screen.dart';
@@ -32,9 +33,36 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isHomeTab = _currentIndex == 0;
+
     return Scaffold(
-      appBar: AppBar(title: Text(_titles[_currentIndex])),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(_titles[_currentIndex]),
+        actions: isHomeTab
+            ? [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Center(
+                    child: Text(
+                      'FR',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
+              ]
+            : null,
+      ),
       body: _tabs[_currentIndex],
+      floatingActionButton: isHomeTab
+          ? FloatingActionButton(
+              onPressed: () =>
+                  Navigator.pushNamed(context, AppRoutes.assistant),
+              child: const Icon(Icons.auto_awesome),
+            )
+          : null,
       bottomNavigationBar: AppBottomNavigation(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),

@@ -29,6 +29,10 @@ abstract final class AppTheme {
         unselectedItemColor: AppColors.textSecondary,
         type: BottomNavigationBarType.fixed,
       ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: AppColors.assistant,
+        foregroundColor: AppColors.white,
+      ),
       cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 0,
