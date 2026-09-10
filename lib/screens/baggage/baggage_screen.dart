@@ -394,15 +394,24 @@ class _BaggageStatusColors {
   factory _BaggageStatusColors.fromStatus(String status) {
     final normalized = status.toLowerCase();
     if (normalized.contains('retard') || normalized.contains('signal')) {
-      return const _BaggageStatusColors(Color(0xFFFFF4E5), Color(0xFF9A5B00));
+      return const _BaggageStatusColors(
+        AppColors.warningSurface,
+        AppColors.warning,
+      );
     }
     if (normalized.contains('arriv') || normalized.contains('disponible')) {
-      return const _BaggageStatusColors(Color(0xFFE7F7EF), Color(0xFF177245));
+      return const _BaggageStatusColors(
+        AppColors.successSurface,
+        AppColors.success,
+      );
     }
     if (normalized.contains('transit') || normalized.contains('charge')) {
-      return const _BaggageStatusColors(Color(0xFFEAF3FF), Color(0xFF0957A5));
+      return const _BaggageStatusColors(AppColors.surface, AppColors.primary);
     }
-    return const _BaggageStatusColors(Color(0xFFE7F7EF), Color(0xFF177245));
+    return const _BaggageStatusColors(
+      AppColors.successSurface,
+      AppColors.success,
+    );
   }
 
   final Color background;

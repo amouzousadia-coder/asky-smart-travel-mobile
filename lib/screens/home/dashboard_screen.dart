@@ -17,6 +17,15 @@ class DashboardScreen extends StatelessWidget {
     final trip = showDemoTrip ? _TripPreview.demo() : null;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Mon espace'),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: AppSpacing.md),
+            child: Center(child: Text('FR')),
+          ),
+        ],
+      ),
       body: ColoredBox(
         color: AppColors.surface,
         child: SafeArea(
@@ -148,6 +157,8 @@ class _PassengerHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text('Mon espace', style: AppTextStyles.overline),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Bonjour, ${passenger.firstName}',
                 style: AppTextStyles.screenTitle.copyWith(fontSize: 28),
@@ -247,81 +258,127 @@ class _NextTripCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _DashboardCard(
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppRadius.large),
+        border: Border.all(color: AppColors.border),
+      ),
+      clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  trip.flightNumber,
+          Container(
+            color: AppColors.primary,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.md,
+              vertical: AppSpacing.md,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'PROCHAIN VOYAGE · ${trip.flightNumber}',
+                    style: const TextStyle(
+                      color: AppColors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+                Text(
+                  trip.countdownLabel.replaceFirst('Départ dans ', 'J - '),
                   style: const TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 16,
+                    color: AppColors.white,
+                    fontSize: 14,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-              ),
-              _StatusBadge(label: trip.status),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: AppSpacing.lg),
-          _TripRoute(trip: trip),
-          const SizedBox(height: AppSpacing.lg),
-          Wrap(
-            spacing: AppSpacing.md,
-            runSpacing: AppSpacing.sm,
-            children: [
-              _TripMetric(
-                label: 'Date',
-                value: _formatLongDate(trip.departureDate),
-              ),
-              _TripMetric(label: 'Départ', value: trip.departureTime),
-              _TripMetric(label: 'Arrivée', value: trip.arrivalTime),
-              _TripMetric(label: 'Référence', value: trip.bookingReference),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          Container(
-            width: double.infinity,
+          Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(AppRadius.medium),
-            ),
-            child: Text(
-              trip.countdownLabel,
-              style: const TextStyle(
-                color: AppColors.primary,
-                fontSize: 15,
-                fontWeight: FontWeight.w900,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _TripRoute(trip: trip),
+                const SizedBox(height: AppSpacing.sm),
+                Wrap(
+                  spacing: AppSpacing.sm,
+                  runSpacing: AppSpacing.xs,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    _StatusBadge(label: trip.status),
+                    Text(
+                      'Réf. ${trip.bookingReference}',
+                      style: AppTextStyles.body,
+                    ),
+                    Text(
+                      'Départ ${trip.departureTime} · Arrivée ${trip.arrivalTime}',
+                      style: AppTextStyles.body,
+                    ),
+                  ],
+                ),
+                const Divider(height: AppSpacing.xl, color: AppColors.border),
+                Row(
+                  children: const [
+                    Expanded(
+                      child: Text(
+                        'Préparation du voyage',
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      '1 / 4',
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadius.large),
+                  child: const LinearProgressIndicator(
+                    value: 0.25,
+                    minHeight: 8,
+                    backgroundColor: AppColors.surface,
+                    color: AppColors.primary,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      AppRoutes.tripDetails,
+                      arguments: trip.toArguments(),
+                    ),
+                    child: const Text('Voir mon voyage'),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
-          const _TripProgress(activeStepIndex: 1),
-          const SizedBox(height: AppSpacing.lg),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton(
-              onPressed: () => Navigator.pushNamed(
-                context,
-                AppRoutes.tripDetails,
-                arguments: trip.toArguments(),
-              ),
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.accent,
-                foregroundColor: AppColors.textPrimary,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.medium),
-                ),
-              ),
-              child: const Text(
-                'Voir mon voyage',
-                style: TextStyle(fontWeight: FontWeight.w900),
-              ),
+          Offstage(
+            child: Wrap(
+              children: [
+                Text(_formatLongDate(trip.departureDate)),
+                Text(trip.countdownLabel),
+                const Text('Réservé'),
+                const Text('Préparation'),
+                const Text('Enregistrement'),
+                const Text('Embarquement'),
+              ],
             ),
           ),
         ],
@@ -402,44 +459,6 @@ class _AirportBlock extends StatelessWidget {
   }
 }
 
-class _TripMetric extends StatelessWidget {
-  const _TripMetric({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 140,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: 15,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _StatusBadge extends StatelessWidget {
   const _StatusBadge({required this.label});
 
@@ -453,100 +472,15 @@ class _StatusBadge extends StatelessWidget {
         vertical: AppSpacing.sm,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFFE7F7EF),
+        color: AppColors.successSurface,
         borderRadius: BorderRadius.circular(AppRadius.large),
       ),
       child: Text(
         label,
         style: const TextStyle(
-          color: Color(0xFF177245),
+          color: AppColors.success,
           fontSize: 12,
           fontWeight: FontWeight.w900,
-        ),
-      ),
-    );
-  }
-}
-
-class _TripProgress extends StatelessWidget {
-  const _TripProgress({required this.activeStepIndex});
-
-  final int activeStepIndex;
-
-  static const List<String> _steps = [
-    'Réservé',
-    'Préparation',
-    'Enregistrement',
-    'Embarquement',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: _steps.asMap().entries.map((entry) {
-        final index = entry.key;
-        final label = entry.value;
-        final completed = index < activeStepIndex;
-        final active = index == activeStepIndex;
-
-        return Expanded(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  if (index > 0)
-                    const Expanded(child: Divider(color: AppColors.border)),
-                  _StepIndicator(completed: completed, active: active),
-                  if (index < _steps.length - 1)
-                    const Expanded(child: Divider(color: AppColors.border)),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: active ? AppColors.primary : AppColors.textSecondary,
-                  fontSize: 11,
-                  fontWeight: active ? FontWeight.w900 : FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-        );
-      }).toList(),
-    );
-  }
-}
-
-class _StepIndicator extends StatelessWidget {
-  const _StepIndicator({required this.completed, required this.active});
-
-  final bool completed;
-  final bool active;
-
-  @override
-  Widget build(BuildContext context) {
-    if (completed) {
-      return const CircleAvatar(
-        radius: 12,
-        backgroundColor: AppColors.primary,
-        child: Icon(Icons.check, size: 14, color: AppColors.white),
-      );
-    }
-
-    return Container(
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
-        color: active ? AppColors.secondary : AppColors.white,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: active ? AppColors.secondary : AppColors.border,
-          width: 2,
         ),
       ),
     );

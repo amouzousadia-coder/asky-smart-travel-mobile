@@ -15,10 +15,10 @@ enum _SearchMode {
 }
 
 enum _FlightStatus {
-  onTime('À l’heure', Color(0xFFE7F7EF), Color(0xFF177245)),
-  delayed('Retardé', Color(0xFFFFF4E5), Color(0xFFB35A00)),
-  boarding('Embarquement', Color(0xFFEAF3FF), Color(0xFF0957A5)),
-  inFlight('En vol', Color(0xFFECEBFF), Color(0xFF4A42A8)),
+  onTime('À l’heure', AppColors.successSurface, AppColors.success),
+  delayed('Retardé', AppColors.warningSurface, AppColors.warning),
+  boarding('Embarquement', AppColors.surface, AppColors.brandBordeaux),
+  inFlight('En vol', AppColors.surface, AppColors.primary),
   arrived('Arrivé', Color(0xFFE8F5E9), Color(0xFF2E7D32)),
   canceled('Annulé', Color(0xFFFFEBEE), Color(0xFFC62828));
 

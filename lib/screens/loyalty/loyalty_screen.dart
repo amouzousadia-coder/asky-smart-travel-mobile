@@ -36,21 +36,19 @@ class LoyaltyScreen extends StatelessWidget {
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const _LoyaltyHeader(),
-                        const SizedBox(height: AppSpacing.md),
                         _MemberCard(profile: profile),
-                        const SizedBox(height: AppSpacing.md),
-                        const _DemoLoyaltyDisclaimer(),
-                        const SizedBox(height: AppSpacing.md),
-                        _MilesSummary(profile: profile),
                         const SizedBox(height: AppSpacing.md),
                         _TierProgressCard(profile: profile),
                         const SizedBox(height: AppSpacing.md),
-                        const _BenefitsCard(),
-                        const SizedBox(height: AppSpacing.md),
                         _LoyaltyActivitySection(activities: activities),
                         const SizedBox(height: AppSpacing.md),
+                        _MilesSummary(profile: profile),
+                        const SizedBox(height: AppSpacing.md),
+                        const _BenefitsCard(),
+                        const SizedBox(height: AppSpacing.md),
                         const _UseMilesCard(),
+                        const SizedBox(height: AppSpacing.md),
+                        const _DemoLoyaltyDisclaimer(),
                         const SizedBox(height: AppSpacing.md),
                         const _EarnMilesCard(),
                       ],
@@ -60,25 +58,6 @@ class LoyaltyScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _LoyaltyHeader extends StatelessWidget {
-  const _LoyaltyHeader();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text('ASKY Club', style: AppTextStyles.screenTitle),
-        SizedBox(height: AppSpacing.sm),
-        Text(
-          'Votre fidélité vous accompagne à chaque voyage.',
-          style: AppTextStyles.body,
-        ),
-      ],
     );
   }
 }
@@ -141,8 +120,8 @@ class _MemberCard extends StatelessWidget {
           Text(
             '${profile.availableMilesLabel} miles',
             style: const TextStyle(
-              color: AppColors.accent,
-              fontSize: 22,
+              color: AppColors.white,
+              fontSize: 36,
               fontWeight: FontWeight.w900,
             ),
           ),
@@ -566,7 +545,7 @@ class _DemoLoyaltyDisclaimer extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF8E0),
+        color: AppColors.warningSurface,
         borderRadius: BorderRadius.circular(AppRadius.medium),
         border: Border.all(color: AppColors.accent),
       ),
@@ -661,13 +640,13 @@ class _ActivityStatusBadge extends StatelessWidget {
         vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
-        color: isPending ? const Color(0xFFFFF8E0) : const Color(0xFFE7F7EF),
+        color: isPending ? AppColors.warningSurface : AppColors.successSurface,
         borderRadius: BorderRadius.circular(AppRadius.large),
       ),
       child: Text(
         status,
         style: TextStyle(
-          color: isPending ? const Color(0xFF8A6400) : const Color(0xFF177245),
+          color: isPending ? AppColors.warning : AppColors.success,
           fontSize: 12,
           fontWeight: FontWeight.w900,
         ),

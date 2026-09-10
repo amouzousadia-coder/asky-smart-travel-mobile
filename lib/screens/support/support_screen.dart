@@ -96,7 +96,7 @@ class _SupportScreenState extends State<SupportScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.maybePop(context),
         ),
-        title: const Text('Assistance'),
+        title: const Text('Nouvelle demande'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -396,7 +396,7 @@ class _PriorityNotice extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF8E0),
+        color: AppColors.warningSurface,
         borderRadius: BorderRadius.circular(AppRadius.medium),
         border: Border.all(color: AppColors.accent),
       ),
@@ -473,7 +473,7 @@ class _SupportSuccessState extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.check_circle, color: Color(0xFF177245), size: 44),
+          const Icon(Icons.check_circle, color: AppColors.success, size: 44),
           const SizedBox(height: AppSpacing.md),
           const Text(
             'Demande envoyée',
@@ -551,7 +551,7 @@ class _StatusBadge extends StatelessWidget {
         vertical: AppSpacing.sm,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFFEAF3FF),
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(AppRadius.large),
       ),
       child: Text(

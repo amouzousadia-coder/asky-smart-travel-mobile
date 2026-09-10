@@ -204,12 +204,7 @@ class _RequestFilters extends StatelessWidget {
       runSpacing: AppSpacing.sm,
       children: [
         _FilterChipButton(
-          label: 'Toutes',
-          selected: selected == _RequestFilter.all,
-          onTap: () => onChanged(_RequestFilter.all),
-        ),
-        _FilterChipButton(
-          label: 'Ouvertes',
+          label: 'En cours',
           selected: selected == _RequestFilter.open,
           onTap: () => onChanged(_RequestFilter.open),
         ),
@@ -217,6 +212,11 @@ class _RequestFilters extends StatelessWidget {
           label: 'Résolues',
           selected: selected == _RequestFilter.resolved,
           onTap: () => onChanged(_RequestFilter.resolved),
+        ),
+        _FilterChipButton(
+          label: 'Toutes',
+          selected: selected == _RequestFilter.all,
+          onTap: () => onChanged(_RequestFilter.all),
         ),
       ],
     );
@@ -776,20 +776,20 @@ class _RequestStatusColors {
   factory _RequestStatusColors.fromStatus(_RequestStatus status) {
     return switch (status) {
       _RequestStatus.newRequest => const _RequestStatusColors(
-        Color(0xFFEAF3FF),
-        Color(0xFF0957A5),
+        AppColors.warningSurface,
+        AppColors.primary,
       ),
       _RequestStatus.inProgress => const _RequestStatusColors(
-        Color(0xFFFFF8E0),
-        Color(0xFF8A6400),
+        AppColors.warningSurface,
+        AppColors.warning,
       ),
       _RequestStatus.waiting => const _RequestStatusColors(
         Color(0xFFF0F2F5),
         Color(0xFF475467),
       ),
       _RequestStatus.resolved => const _RequestStatusColors(
-        Color(0xFFE7F7EF),
-        Color(0xFF177245),
+        AppColors.successSurface,
+        AppColors.success,
       ),
       _RequestStatus.closed => const _RequestStatusColors(
         Color(0xFFECEFF3),

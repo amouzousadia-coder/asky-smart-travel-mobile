@@ -348,13 +348,12 @@ void main() {
 
     expect(find.text('Bonjour, Diane'), findsOneWidget);
     expect(find.text('Votre prochain voyage'), findsOneWidget);
-    expect(find.text('ASKY7D2'), findsOneWidget);
+    expect(find.text('PROCHAIN VOYAGE · KP 020'), findsOneWidget);
+    expect(find.text('Réf. ASKY7D2'), findsOneWidget);
     expect(find.text('À l’heure'), findsWidgets);
-    expect(find.text('Départ dans 2 jours'), findsOneWidget);
-    expect(find.text('Réservé'), findsOneWidget);
-    expect(find.text('Préparation'), findsOneWidget);
-    expect(find.text('Enregistrement'), findsOneWidget);
-    expect(find.text('Embarquement'), findsOneWidget);
+    expect(find.text('J - 2 jours'), findsOneWidget);
+    expect(find.text('Préparation du voyage'), findsOneWidget);
+    expect(find.text('1 / 4'), findsOneWidget);
   });
 
   testWidgets('Dashboard displays checklist quick actions and smart travel', (
@@ -724,7 +723,7 @@ void main() {
   ) async {
     await tester.pumpWidget(_buildSupportTestApp());
 
-    expect(find.text('Assistance'), findsOneWidget);
+    expect(find.text('Nouvelle demande'), findsOneWidget);
     expect(find.text('Comment pouvons-nous vous aider ?'), findsOneWidget);
     expect(find.text('Catégorie'), findsOneWidget);
 
@@ -953,7 +952,7 @@ void main() {
   ) async {
     await tester.pumpWidget(_buildMyRequestsTestApp());
 
-    await tester.tap(find.text('Ouvertes'));
+    await tester.tap(find.text('En cours'));
     await tester.pumpAndSettle();
 
     expect(find.text('ASKY-2048'), findsOneWidget);
@@ -1077,7 +1076,7 @@ void main() {
   ) async {
     await tester.pumpWidget(_buildProfileTestApp());
 
-    expect(find.text('Mon profil'), findsOneWidget);
+    expect(find.text('Profil'), findsOneWidget);
     expect(find.text('DA'), findsOneWidget);
     expect(find.text('Diane Amouzou'), findsOneWidget);
     expect(find.text('diane.amouzou@example.com'), findsWidgets);
@@ -1351,28 +1350,30 @@ void main() {
   ) async {
     await tester.pumpWidget(_buildNotificationsTestApp());
 
-    await tester.tap(find.text('Tout marquer comme lu'));
+    await tester.tap(find.text('Tout lire'));
     await tester.pumpAndSettle();
 
     expect(find.text('0 non lues'), findsOneWidget);
-    expect(find.text('Tout marquer comme lu'), findsNothing);
+    expect(find.text('Tout lire'), findsNothing);
   });
 
   testWidgets(
-    'Notifications screen filters unread travel and assistance items',
+    'Notifications screen filters flight preparation and assistance items',
     (WidgetTester tester) async {
       await tester.pumpWidget(_buildNotificationsTestApp());
 
-      await tester.tap(find.text('Non lues'));
-      await tester.pumpAndSettle();
-      expect(find.text('Votre vol est à l’heure'), findsOneWidget);
-      expect(find.text('Enregistrement bientôt disponible'), findsOneWidget);
-      expect(find.text('Vérifiez vos documents'), findsNothing);
-
-      await tester.tap(find.text('Voyage'));
+      await tester.tap(find.text('Vol'));
       await tester.pumpAndSettle();
       expect(find.text('Votre vol est à l’heure'), findsOneWidget);
       expect(find.text('Réservation confirmée'), findsOneWidget);
+      expect(find.text('Vérifiez vos documents'), findsNothing);
+
+      await tester.tap(find.text('Préparation'));
+      await tester.pumpAndSettle();
+      expect(find.text('Enregistrement bientôt disponible'), findsOneWidget);
+      expect(find.text('Vérifiez vos documents'), findsOneWidget);
+      expect(find.text('Préparez vos bagages'), findsOneWidget);
+      expect(find.text('Votre vol est à l’heure'), findsNothing);
       expect(find.text('Besoin d’aide ?'), findsNothing);
 
       await tester.tap(find.text('Assistance'));
@@ -1420,19 +1421,16 @@ void main() {
     expect(find.text('Assistant route'), findsOneWidget);
   });
 
-  testWidgets('Notifications screen shows up to date empty unread state', (
+  testWidgets('Notifications screen shows empty state without notifications', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(_buildNotificationsTestApp());
+    await tester.pumpWidget(
+      _buildNotificationsTestApp(showDemoNotifications: false),
+    );
 
-    await tester.tap(find.text('Tout marquer comme lu'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Non lues'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Vous êtes à jour.'), findsOneWidget);
+    expect(find.text('Aucune notification'), findsOneWidget);
     expect(
-      find.text('Toutes vos notifications ont été consultées.'),
+      find.text('Vos alertes de voyage apparaîtront ici.'),
       findsOneWidget,
     );
   });

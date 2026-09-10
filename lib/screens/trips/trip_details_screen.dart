@@ -684,18 +684,18 @@ class _StatusColors {
       return const _StatusColors(Color(0xFFFFEBEE), Color(0xFFC62828));
     }
     if (normalized.contains('retard')) {
-      return const _StatusColors(Color(0xFFFFF4E5), Color(0xFFB35A00));
+      return const _StatusColors(AppColors.warningSurface, AppColors.warning);
     }
     if (normalized.contains('termin')) {
       return const _StatusColors(Color(0xFFF0F2F5), Color(0xFF475467));
     }
     if (normalized.contains('embarquement')) {
-      return const _StatusColors(Color(0xFFECEBFF), Color(0xFF4A42A8));
+      return const _StatusColors(AppColors.surface, AppColors.brandBordeaux);
     }
     if (normalized.contains('vol')) {
-      return const _StatusColors(Color(0xFFEAF7FF), Color(0xFF096B88));
+      return const _StatusColors(AppColors.surface, AppColors.primary);
     }
-    return const _StatusColors(Color(0xFFE7F7EF), Color(0xFF177245));
+    return const _StatusColors(AppColors.successSurface, AppColors.success);
   }
 
   final Color background;

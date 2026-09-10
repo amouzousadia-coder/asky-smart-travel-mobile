@@ -16,11 +16,11 @@ enum _TripsTab {
 }
 
 enum _TripStatus {
-  confirmed('Confirmé', Color(0xFFEAF3FF), Color(0xFF0957A5)),
-  onTime('À l’heure', Color(0xFFE7F7EF), Color(0xFF177245)),
-  delayed('Retardé', Color(0xFFFFF4E5), Color(0xFFB35A00)),
-  boarding('Embarquement', Color(0xFFECEBFF), Color(0xFF4A42A8)),
-  inFlight('En vol', Color(0xFFEAF7FF), Color(0xFF096B88)),
+  confirmed('Confirmé', AppColors.warningSurface, AppColors.primary),
+  onTime('À l’heure', AppColors.successSurface, AppColors.success),
+  delayed('Retardé', AppColors.warningSurface, AppColors.warning),
+  boarding('Embarquement', AppColors.surface, AppColors.brandBordeaux),
+  inFlight('En vol', AppColors.surface, AppColors.primary),
   completed('Terminé', Color(0xFFF0F2F5), Color(0xFF475467)),
   canceled('Annulé', Color(0xFFFFEBEE), Color(0xFFC62828));
 

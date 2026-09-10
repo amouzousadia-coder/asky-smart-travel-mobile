@@ -538,13 +538,13 @@ class _ImportantBadge extends StatelessWidget {
         vertical: AppSpacing.xs,
       ),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF4D6),
+        color: AppColors.warningSurface,
         borderRadius: BorderRadius.circular(AppRadius.large),
       ),
       child: const Text(
         'Important',
         style: TextStyle(
-          color: Color(0xFF8A5A00),
+          color: AppColors.warning,
           fontSize: 12,
           fontWeight: FontWeight.w900,
         ),

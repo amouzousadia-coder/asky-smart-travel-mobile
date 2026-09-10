@@ -27,7 +27,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   static const List<String> _titles = [
     'Accueil',
     'Rechercher un vol',
-    'Mes voyages',
+    'Mon voyage',
     'Plus',
   ];
 

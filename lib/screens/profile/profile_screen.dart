@@ -83,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.maybePop(context),
               ),
-              title: const Text('Mon profil'),
+              title: const Text('Profil'),
             )
           : null,
       body: SafeArea(
@@ -164,13 +164,14 @@ class _ProfileHeader extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(AppRadius.large),
+        border: Border.all(color: AppColors.border),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x1F062B5B),
-            blurRadius: 18,
-            offset: Offset(0, 8),
+            color: Color(0x0F102033),
+            blurRadius: 14,
+            offset: Offset(0, 6),
           ),
         ],
       ),
@@ -178,11 +179,11 @@ class _ProfileHeader extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 34,
-            backgroundColor: AppColors.accent,
+            backgroundColor: Color(0xFFF0E7E4),
             child: Text(
               profile.initials,
               style: const TextStyle(
-                color: AppColors.textPrimary,
+                color: AppColors.primary,
                 fontSize: 22,
                 fontWeight: FontWeight.w900,
               ),
@@ -193,15 +194,10 @@ class _ProfileHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Profil passager',
-                  style: TextStyle(color: AppColors.white, fontSize: 13),
-                ),
-                const SizedBox(height: AppSpacing.xs),
                 Text(
                   profile.fullName,
                   style: const TextStyle(
-                    color: AppColors.white,
+                    color: AppColors.textPrimary,
                     fontSize: 22,
                     fontWeight: FontWeight.w900,
                   ),
@@ -209,7 +205,26 @@ class _ProfileHeader extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   profile.email,
-                  style: const TextStyle(color: AppColors.white),
+                  style: const TextStyle(color: AppColors.textSecondary),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                    vertical: AppSpacing.xs,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF0E7E4),
+                    borderRadius: BorderRadius.circular(AppRadius.small),
+                  ),
+                  child: const Text(
+                    'ASKY CLUB · SILVER',
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
                 ),
               ],
             ),

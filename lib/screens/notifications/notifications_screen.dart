@@ -209,8 +209,8 @@ enum _NotificationType {
 
 enum _NotificationFilter {
   all('Toutes'),
-  unread('Non lues'),
-  travel('Voyage'),
+  flight('Vol'),
+  preparation('Préparation'),
   assistance('Assistance');
 
   const _NotificationFilter(this.label);
@@ -220,8 +220,13 @@ enum _NotificationFilter {
   bool matches(_TravelNotification notification) {
     return switch (this) {
       _NotificationFilter.all => true,
-      _NotificationFilter.unread => !notification.isRead,
-      _NotificationFilter.travel => notification.type.isTravel,
+      _NotificationFilter.flight =>
+        notification.type == _NotificationType.flight ||
+            notification.type == _NotificationType.booking,
+      _NotificationFilter.preparation =>
+        notification.type == _NotificationType.checkin ||
+            notification.type == _NotificationType.baggage ||
+            notification.type == _NotificationType.document,
       _NotificationFilter.assistance =>
         notification.type == _NotificationType.assistance,
     };
@@ -335,7 +340,7 @@ class _NotificationsHeader extends StatelessWidget {
                 TextButton.icon(
                   onPressed: onMarkAllRead,
                   icon: const Icon(Icons.done_all),
-                  label: const Text('Tout marquer comme lu'),
+                  label: const Text('Tout lire'),
                 ),
             ],
           ),
@@ -404,7 +409,7 @@ class _NotificationCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: notification.isRead
               ? AppColors.white
-              : const Color(0xFFEAF3FF),
+              : AppColors.warningSurface,
           borderRadius: BorderRadius.circular(AppRadius.large),
           border: Border.all(
             color: notification.isRead ? AppColors.border : AppColors.secondary,
@@ -573,11 +578,11 @@ class _EmptyNotificationsState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = filter == _NotificationFilter.unread && hasNotifications
-        ? 'Vous êtes à jour.'
+    final title = hasNotifications
+        ? 'Rien à afficher ici.'
         : 'Aucune notification';
-    final message = filter == _NotificationFilter.unread && hasNotifications
-        ? 'Toutes vos notifications ont été consultées.'
+    final message = hasNotifications
+        ? 'Aucune notification ne correspond à ce filtre.'
         : 'Vos alertes de voyage apparaîtront ici.';
 
     return _NotificationsCard(
