@@ -32,6 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final canGoBack = Navigator.canPop(context);
+
     return Scaffold(
       body: ColoredBox(
         color: AppColors.surface,
@@ -47,11 +49,13 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(
-                  onPressed: () => Navigator.maybePop(context),
-                  icon: const Icon(Icons.arrow_back),
-                ),
-                const SizedBox(height: AppSpacing.sm),
+                if (canGoBack) ...[
+                  IconButton(
+                    onPressed: () => Navigator.maybePop(context),
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                ],
                 const _LoginBrandHeader(),
                 const SizedBox(height: AppSpacing.xl),
                 Text(

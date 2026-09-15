@@ -12,7 +12,7 @@ class AskySmartTravelApp extends StatelessWidget {
       title: 'ASKY Smart Travel',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.login,
       routes: AppRoutes.routes,
       onUnknownRoute: AppRoutes.onUnknownRoute,
     );

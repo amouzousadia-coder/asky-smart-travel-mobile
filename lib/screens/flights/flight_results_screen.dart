@@ -587,6 +587,7 @@ class _FlightResultCard extends StatelessWidget {
                 style: FilledButton.styleFrom(
                   backgroundColor: AppColors.accent,
                   foregroundColor: AppColors.textPrimary,
+                  minimumSize: const Size(96, 44),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppRadius.medium),
                   ),
